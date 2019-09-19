@@ -1,10 +1,9 @@
 #include QMK_KEYBOARD_H
+#include "msiu.h"
 
 // Mod-Tap keys for cleaner code
-#define ESC_CTL LCTL_T(KC_ESC)
 #define SPC_LW LT(2, KC_SPC)
 #define OSM_SFT OSM(MOD_LSFT)
-#define CTL_SFT MT(MOD_LCTL | MOD_LSFT, _______)
 #define TAB_NUM LT(_NB, KC_TAB)
 
 #define _QW 0
@@ -14,10 +13,6 @@
 #define _FN 4
 #define _NB 5
 
-enum keycodes {
-  P_WORK = SAFE_RANGE,
-  P_VIMA
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QW] = LAYOUT( /* Base */
@@ -71,24 +66,6 @@ void matrix_init_user(void) {
 
 void matrix_scan_user(void) {
 
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case P_WORK:
-      if (record->event.pressed) {
-        SEND_STRING("");
-      } else {
-      }
-      break;
-    case P_VIMA:
-      if (record->event.pressed) {
-        SEND_STRING("");
-      } else {
-      }
-      break;
-  }
-  return true;
 }
 
 void led_set_user(uint8_t usb_led) {

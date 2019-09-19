@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "msiu.h"
 
 extern keymap_config_t keymap_config;
 
@@ -33,10 +34,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `------------------------------------------------------------------------------------------'
    */
   [_QWERTY] = LAYOUT_ortho_4x12(
-    LT(_NUMB, KC_TAB),   KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,      KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
-    LCTL_T(KC_ESC),      KC_A,    KC_S,    KC_D,    KC_F,  KC_G,      KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,             KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,      KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    KC_LCTL,             KC_HYPR, KC_LALT, KC_LGUI, LOWER, MO(_FUNC), KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    TAB_NUM,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,     KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
+    CTL_ESC,  KC_A,    KC_S,    KC_D,    KC_F,  KC_G,     KC_H,   KC_J,  KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,     KC_N,   KC_M,  KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    CTL_SFT,  KC_HYPR, KC_LALT, KC_LGUI, LOWER, SPC_FNC,  KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
   ),
 
   /* Dvorak
@@ -106,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_ADJUST] = LAYOUT_ortho_4x12(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, QWERTY,  DVORAK,  _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, P_WORK,  P_VIMA,  QWERTY,  DVORAK,  _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET
   ),
@@ -127,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
