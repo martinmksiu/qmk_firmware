@@ -3,4 +3,5 @@ Shared macros for my growing collection of keyboards, including but not limited 
 * planck rev6
 * katana60
 * ut47.2
+* let's split eh
 * and more coming...

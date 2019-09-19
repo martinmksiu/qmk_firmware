@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "msiu.h"
 
 extern keymap_config_t keymap_config;
 
@@ -17,8 +18,8 @@ extern keymap_config_t keymap_config;
 #define _ADJUST 16
 
 
-enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
+enum lse_keycodes {
+  QWERTY = NEW_SAFE_RANGE,
   DVORAK,
   LOWER,
   RAISE,
@@ -104,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT( \
   RGB_TOG, RGB_VAI, RGB_SAI, RGB_HUI, _______, _______, _______, _______, _______, _______, _______, _______, \
-  RGB_MOD, RGB_VAD, RGB_SAD, RGB_HUD, _______, _______, _______, QWERTY,  DVORAK,  _______, _______, _______, \
+  RGB_MOD, RGB_VAD, RGB_SAD, RGB_HUD, _______, _______, _______, P_WORK,  P_VIMA,  QWERTY,  DVORAK,  _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET    \
 ),
@@ -142,7 +143,7 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // case QWERTY:
     //   if (record->event.pressed) {
