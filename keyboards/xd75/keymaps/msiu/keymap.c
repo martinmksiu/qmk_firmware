@@ -8,7 +8,6 @@ enum xd75_layers {
   _DVORAK,
   _LOWER,
   _RAISE,
-  _NUMB,
   _FUNC,
   _ADJUST
 };
