@@ -2,6 +2,17 @@
 #include "msiu.h"
 
 // Layer shorthand
+
+enum xd75_layers {
+  _QWERTY,
+  _DVORAK,
+  _LOWER,
+  _RAISE,
+  _NUMB,
+  _FUNC,
+  _ADJUST
+};
+
 #define _QW 0
 #define _DV 1
 #define _LW 2
@@ -9,7 +20,14 @@
 #define _FN 4
 #define _PW 5
 
+enum xd75_keycodes {
+  QWERTY = NEW_SAFE_RANGE,
+  DVORAK,
+};
+
 // Shortcuts
+#define LOWER MO(_LOWER)
+#define RAISE MO(_RAISE)
 #define PSC_DKT SCMD(KC_4)
 #define PSC_CLB C(S(G(KC_4)))
 #define OSM_SFT OSM(MOD_LSFT)
@@ -31,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
- [_QW] = { /* QWERTY */
+ [_QWERTY] = { /* QWERTY */
   { KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_PLUS, KC_MINS, KC_ASTR, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL   },
   { KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_7,    KC_8,    KC_9   , KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC  },
   { CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_4,    KC_5,    KC_6   , KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT  },
@@ -41,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
  /* Dvorak */
 
-  [_DV] = { /* Dvorak */
+  [_DVORAK] = { /* Dvorak */
    { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  },
    { _______, KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    _______, _______, _______, KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    _______  },
    { _______, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    _______, _______, _______, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH  },
@@ -64,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
- [_LW] = { /* LOWERED */
+ [_LOWER] = { /* LOWERED */
   { _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______   },
   { KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, _______, KC_VOLU, _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______   },
   { _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_MPRV, KC_MPLY, KC_MNXT, KC_F6,   KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE   },
@@ -86,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * '--------------------------------------------------------------------------------------------------------------------------------------'
  */
 
- [_RS] = { /* RAISED */
+ [_RAISE] = { /* RAISED */
   { _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL    },
   { KC_GRV , KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    _______, KC_VOLU, _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL    },
   { _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_MPRV, KC_MPLY, KC_MNXT, KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS   },
@@ -96,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* FUNCTION */
 
- [_FN] = { /* FUNCTION */
+ [_FUNC] = { /* FUNCTION */
   { RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, BL_TOGG, BL_INC,  BL_DEC,  _______, _______, _______, _______  },
   { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UP  , _______, KC_PSCR, _______  },
   { _______, _______, PSC_DKT, TO(_DV), TO(_QW), _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______  },
@@ -115,3 +133,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  },
 };
 
+uint32_t layer_state_set_user(uint32_t state) {
+  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
+
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_QWERTY);
+      }
+      return false;
+      break;
+    case DVORAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_DVORAK);
+      }
+      return false;
+      break;
+  }
+  return true;
+}
