@@ -213,7 +213,7 @@ void iota_gfx_task_user(void) {
 }
 #endif//SSD1306OLED
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef SSD1306OLED
     set_keylog(keycode, record);
