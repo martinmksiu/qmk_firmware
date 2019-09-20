@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "msiu.h"
 
 #ifdef PROTOCOL_LUFA
   #include "lufa.h"
@@ -25,13 +26,11 @@ extern uint8_t is_master;
 #define _NUMB 4
 #define _FUNC 5
 
-enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
+enum lily58_keycodes {
+  QWERTY = NEW_SAFE_RANGE,
   LOWER,
   RAISE,
   ADJUST,
-  P_WORK,
-  P_VIMA,
 };
 
 #define CTL_ESC LCTL_T(KC_ESC)
@@ -256,18 +255,6 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
         break;
-    case P_WORK:
-      if (record->event.pressed) {
-        SEND_STRING("");
-      } else {
-      }
-      break;
-    case P_VIMA:
-      if (record->event.pressed) {
-        SEND_STRING("");
-      } else {
-      }
-      break;
   }
   return true;
 }
