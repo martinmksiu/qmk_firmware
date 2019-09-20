@@ -13,12 +13,6 @@ enum xd75_layers {
   _ADJUST
 };
 
-#define _QW 0
-#define _DV 1
-#define _LW 2
-#define _RS 3
-#define _FN 4
-#define _PW 5
 
 enum xd75_keycodes {
   QWERTY = NEW_SAFE_RANGE,
@@ -28,6 +22,7 @@ enum xd75_keycodes {
 // Shortcuts
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
+#define ADJUST MO(_ADJUST)
 #define PSC_DKT SCMD(KC_4)
 #define PSC_CLB C(S(G(KC_4)))
 #define OSM_SFT OSM(MOD_LSFT)
@@ -54,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   { KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_7,    KC_8,    KC_9   , KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC  },
   { CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_4,    KC_5,    KC_6   , KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT  },
   { OSM_SFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_1,    KC_2,    KC_3   , KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT   },
-  { CTL_SFT, KC_HYPR, KC_LALT, KC_LGUI, MO(_LW), SPC_FNC, KC_0,    MO(_PW), KC_DOT , KC_SPC,  MO(_RS), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  },
+  { CTL_SFT, KC_HYPR, KC_LALT, KC_LGUI, LOWER,   SPC_FNC, KC_0,    ADJUST,  KC_DOT , KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  },
  },
 
  /* Dvorak */
@@ -117,14 +112,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_FUNC] = { /* FUNCTION */
   { RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, BL_TOGG, BL_INC,  BL_DEC,  _______, _______, _______, _______  },
   { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UP  , _______, KC_PSCR, _______  },
-  { _______, _______, PSC_DKT, TO(_DV), TO(_QW), _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______  },
+  { _______, _______, PSC_DKT, DVORAK,  QWERTY,  _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______  },
   { _______, _______, PSC_CLB, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  },
   { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  },
  },
  
 /* PASSWORD */
 
- [_PW] = { /* FUNCTION */
+ [_ADJUST] = { /* FUNCTION */
   { _______, _______, _______, _______, _______, _______, _______, RESET,   _______, _______, _______, _______, _______, _______, _______  },
   { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  },
   { _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, P_WORK,  P_VIMA,  _______, _______, _______  },
