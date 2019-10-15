@@ -4,4 +4,6 @@ Shared macros for my growing collection of keyboards, including but not limited 
 * katana60
 * ut47.2
 * let's split eh
-* and more coming...
+* lily58 pro
+* contra
+* xd75re
