@@ -14,11 +14,14 @@ enum planck_layers {
 };
 
 enum planck_keycodes {
-  QWERTY = SAFE_RANGE,
+  QWERTY = NEW_SAFE_RANGE,
   DVORAK,
   LOWER,
   RAISE
 };
+
+#define LOWER MO(_LOWER)
+#define RAISE MO(_RAISE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
